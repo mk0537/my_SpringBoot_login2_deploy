@@ -18,8 +18,9 @@ public class JwtTokenProvider {
     // private final long tokenValidity = 1000 * 10; // 테스트용 10초
     private final long tokenValidity = 1000 * 60 * 60 * 24; // 토큰 유효기간 24시간
 
-    private static final String SECRET_KEY = "my-super-secret-key-that-is-at-least-32-bytes-long";
-
+    private static final String SECRET_KEY = "this_is_a_very_long_32_byte_minimum_secret_key!";
+    
+    
     @PostConstruct
     public void init() {
         this.key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));

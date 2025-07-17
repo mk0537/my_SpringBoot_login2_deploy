@@ -35,7 +35,7 @@ import com.example.login2.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://my-login-frontend-bucket.s3-website.ap-northeast-2.amazonaws.com", allowCredentials = "true")
 @Slf4j // Lombok을 사용하여 로그를 남길 수 있는 log 객체를 자동으로 생성한다.
 @RestController // 이 클래스가 RESTful 웹서비스의 컨트롤러 역할을 한다는 것을 나타낸다.
 @RequestMapping("/login") // 이 컨트롤러의 기본 URI 경로를 "/login" 으로 설정된다.

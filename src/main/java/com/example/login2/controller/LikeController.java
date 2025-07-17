@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://my-login-frontend-bucket.s3-website.ap-northeast-2.amazonaws.com", allowCredentials = "true")
 @RestController
 @RequestMapping("/likes")
 @RequiredArgsConstructor  // @Autowired 어노테이션 대신 생성자 주입

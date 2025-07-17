@@ -1,0 +1,19 @@
+server:
+  port: 80
+spring:
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://database-1.ca5q4qeue9z6.us-east-1.rds.amazonaws.com:3306/login2?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: root
+    password: 11111111
+  web:
+    resources:
+      static-locations:
+        - classpath:/static/
+        - file:uploads/
+    cors:
+      allowed-origins: "*"

@@ -38,7 +38,7 @@ import java.nio.file.Path;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://my-login-frontend-bucket.s3-website.ap-northeast-2.amazonaws.com", allowCredentials = "true")
 @RestController
 @RequiredArgsConstructor // @Autowired 어노테이션 대신 생성자 주입
 @RequestMapping("/posts")
