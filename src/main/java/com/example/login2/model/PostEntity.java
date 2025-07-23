@@ -50,13 +50,14 @@ public class PostEntity {
 
 
     @CreationTimestamp
-    @Column(updatable = false)
+    @Column(updatable = false, name = "created_at")
     private LocalDateTime createdAt;   // 작성일
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;   // 수정일
     
     // 이미지 URL 필드 추가
+    @Column(name = "image_url")
     private String imageUrl;
 
 }

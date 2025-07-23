@@ -19,7 +19,7 @@ public class PostResponseDTO {
     private Long id;
     private String title;
     private String content;
-    private String imageUrl; // 🔽 이미지 URL 포함
+    private String imageUrl; // 이미지 URL 포함
 
     // 작성자 정보 (UserEntity에서 가져옴)
     private String email;

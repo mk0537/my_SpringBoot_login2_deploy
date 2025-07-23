@@ -1,5 +1,5 @@
 server:
-  port: 80
+  port: 8080
 spring:
   jpa:
     show-sql: true
@@ -15,5 +15,15 @@ spring:
       static-locations:
         - classpath:/static/
         - file:uploads/
+  mvc:
     cors:
       allowed-origins: "*"
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          filter:
+            CorsFilter: DEBUG
+          cors: DEBUG
+        security: DEBUG

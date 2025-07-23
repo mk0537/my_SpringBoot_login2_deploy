@@ -38,7 +38,7 @@ import java.nio.file.Path;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "http://my-login-frontend-bucket.s3-website.ap-northeast-2.amazonaws.com", allowCredentials = "true")
+//@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequiredArgsConstructor // @Autowired 어노테이션 대신 생성자 주입
 @RequestMapping("/posts")
@@ -162,6 +162,7 @@ public class PostController {
     @DeleteMapping("{id}")
     public ResponseEntity<?> deletePost(@PathVariable("id") Long id, HttpServletRequest request) {
         try {
+        	
             String token = request.getHeader("Authorization");
             if (token != null && token.startsWith("Bearer ")) {
                 token = token.substring(7); // "Bearer " 부분 제거

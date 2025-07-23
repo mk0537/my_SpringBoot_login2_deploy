@@ -97,15 +97,21 @@ public class PostService {
         p_repository.save(post);
     }
 
+    
     // 게시글 삭제 (user 함께 fetch)
     public void deletePost(Long id, String userEmail) {
         PostEntity post = p_repository.findWithUserById(id)
                 .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
 
+        // 이메일 로그 확인 (디버깅용)
+        System.out.println("DB 이메일: " + post.getUser().getEmail());
+        System.out.println("토큰 이메일: " + userEmail);
+        
         // 작성자 확인
-        if (!post.getUser().getEmail().equals(userEmail)) {
+        if (!post.getUser().getEmail().equalsIgnoreCase(userEmail)) {
             throw new RuntimeException("작성자 본인만 삭제할 수 있습니다.");
         }
+       
 
         p_repository.delete(post);
     }

@@ -26,8 +26,15 @@ public class CommentResponseDTO {
     public CommentResponseDTO(CommentEntity comment) {
         this.id = comment.getId();
         this.content = comment.getContent();
-        this.author = comment.getUser().getNickName();
-        this.email = comment.getUser().getEmail();
+        
+        if (comment.getUser() == null || comment.getUser().getIsDeleted()) {
+            this.author = "알 수 없음";
+            this.email = null;  // 이메일도 숨기고 싶으면 null 처리
+        } else {
+            this.author = comment.getUser().getNickName();
+            this.email = comment.getUser().getEmail();
+        }
+
         this.createdAt = comment.getCreatedAt();
     }
 

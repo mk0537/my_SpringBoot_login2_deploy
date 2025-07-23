@@ -24,6 +24,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.tokenProvider = tokenProvider;
     }
 
+    // 인증 필터를 적용하지 않을 경로 지정
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getRequestURI();
+        return path.startsWith("/login") ||
+               path.startsWith("/signup") ||
+               path.startsWith("/posts");
+    }
+
     @Override
     protected void doFilterInternal(
             HttpServletRequest request, 
@@ -31,14 +40,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
 
-        // OPTIONS 요청(프리플라이트) 바로 통과 및 CORS 헤더 설정
-        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
-            setCorsHeaders(response);
-            response.setStatus(HttpServletResponse.SC_OK);
-            return;
-        }
-
-        // JWT 토큰 추출 및 검증
         String token = getJwtFromRequest(request);
 
         if (StringUtils.hasText(token)) {
@@ -59,23 +60,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } else {
-                // 토큰이 유효하지 않을 때 401 + CORS 헤더 포함 응답
-                setCorsHeaders(response);
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.setContentType("application/json;charset=UTF-8");
-                response.getWriter().write("{\"message\":\"Invalid or expired token\"}");
-                return;
+                // 인증 실패지만 직접 응답 종료하지 않고 필터 체인 진행
+                // (AuthenticationEntryPoint가 처리하도록)
             }
         }
 
         filterChain.doFilter(request, response);
-    }
-
-    private void setCorsHeaders(HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", "http://my-login-frontend-bucket.s3-website.ap-northeast-2.amazonaws.com");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, X-Requested-With");
     }
 
     private String getJwtFromRequest(HttpServletRequest request) {
